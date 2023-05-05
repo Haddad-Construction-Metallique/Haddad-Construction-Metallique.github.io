@@ -1,0 +1,425 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+
+<head>
+<script type="text/javascript" src="js/jquery.min.1.7.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="js/modernizr.2.5.3.min.js"></script>
+<script type="text/javascript" src="js/hash.js"></script>
+
+
+<!-- Animate.css -->
+<title>Haddad Construction Metallique HCM</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.1">
+<meta name="description" content="construire des meubles sur mesure pour les entreprises et les particuliers.">
+<meta name="keywords" content="mobilier,scholair,medicale,articles,decoratis,metal,meuble,metal wrok,tunisia">
+<link rel="stylesheet" href="css/docs.css">
+<link rel="stylesheet" href="css/animate.css">
+<!-- Icomoon Icon Fonts-->
+<link rel="stylesheet" href="css/icomoon.css">
+<link rel="shortcut icon" href="pics/favicon.png">
+<!-- Facebook Pixel Code -->
+<script>
+	!function(f,b,e,v,n,t,s)
+	{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+	if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+	n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];
+	s.parentNode.insertBefore(t,s)}(window, document,'script',
+	'https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '463283551855915');
+	fbq('track', 'PageView');
+	</script>
+	<noscript><img height="1" width="1" style="display:none"
+	src="https://www.facebook.com/tr?id=463283551855915&ev=PageView&noscript=1"
+	/></noscript>
+	<!-- End Facebook Pixel Code -->
+</head>
+<body >	
+	<div class =menu >
+
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id1">Maternelle</span>
+		<span  style="font-size: 250%"class="btn btn-success btn_go_to_page_id2">Tables Ecolier</span>	
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id3">Chaises Ecolier</span>
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id4">Tables</span>
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id5">Armoires Et Rangements</span>	
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id6">Jeux De Plein Air</span>
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id7">Bureaux</span>
+		<span  style="font-size: 250%" class="btn btn-success btn_go_to_page_id8">Divers et Accessoires</span>	 
+	</div>	
+
+	
+
+<div id="canvas">
+	<div id="book-zoom">	
+		<div class="sample-docs">
+			<div ignore="1" class="tabs"><div class="left">  </div> <div class="right"> </div></div>
+			<div class="hard"></div>
+			<div class="hard"></div>
+			<div class="hard p59"></div>
+			<div class="hard p60"></div>
+		</div>	
+	</div>
+
+	<input type="image" src="pics/right.png" name="rightarr" class="rightarr" id="rightarr" style="margin-right: 100px; margin-top: 20px;"/>
+	<input type="image" src="pics/left.png" name="leftarr" class="leftarr" id="leftarr" style="margin-top: 20px;" />													 
+	<div id="slider-bar" class="turnjs-slider">	
+		<div id="slider"></div>
+		
+		
+	</div>
+</div>
+
+
+														 
+<script type="text/javascript">
+	
+
+function loadApp() {
+
+	var flipbook = $('.sample-docs');
+
+	// Check if the CSS was already loaded
+	
+	if (flipbook.width()==0 || flipbook.height()==0) {
+		setTimeout(loadApp, 10);
+		return;
+	}
+
+	// Mousewheel
+
+	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
+
+		var data = $(this).data(),
+			step = 34,
+			flipbook = $('.sample-docs'),
+			actualPos = $('#slider').slider('value')*step;
+
+		if (typeof(data.scrollX)==='undefined') {
+			data.scrollX = actualPos;
+			data.scrollPage = flipbook.turn('page');
+		}
+
+		data.scrollX = Math.min($( "#slider" ).slider('option', 'max')*step,
+			Math.max(0, data.scrollX + deltaX));
+
+		var actualView = Math.round(data.scrollX/step),
+			page = Math.min(flipbook.turn('pages'), Math.max(1, actualView*2 - 2));
+
+		if ($.inArray(data.scrollPage, flipbook.turn('view', page))==-1) {
+			data.scrollPage = page;
+			flipbook.turn('page', page);
+		}
+
+		if (data.scrollTimer)
+			clearInterval(data.scrollTimer);
+		
+		data.scrollTimer = setTimeout(function(){
+			data.scrollX = undefined;
+			data.scrollPage = undefined;
+			data.scrollTimer = undefined;
+		}, 1000);
+
+	});
+
+	// Slider
+	
+
+	$( "#slider" ).slider({
+		min: 1,
+		max: 100,
+
+		start: function(event, ui) {
+			if (!window._thumbPreview) {
+				_thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
+				setPreview(ui.value);
+				_thumbPreview.appendTo($(ui.handle));
+			} else
+				setPreview(ui.value);
+
+			moveBar(false);
+		},
+
+		slide: function(event, ui) {
+			setPreview(ui.value);
+		},
+
+		stop: function() {
+			if (window._thumbPreview)
+				_thumbPreview.removeClass('show');
+			
+			$('.sample-docs').turn('page', Math.max(1, $(this).slider('value')*2 - 2));
+		}
+	});
+
+
+	// URIs
+	
+	Hash.on('^page\/([0-9]*)$', {
+		yep: function(path, parts) {
+			var page = parts[1];
+
+			if (page!==undefined) {
+				if ($('.sample-docs').turn('is'))
+					$('.sample-docs').turn('page', page);
+			}
+
+		},
+		nop: function(path) {
+
+			if ($('.sample-docs').turn('is'))
+				$('.sample-docs').turn('page', 1);
+		}
+	});
+
+	// Arrows
+
+	$(document).keydown(function(e){
+
+		var previous = 37, next = 39;
+
+		switch (e.keyCode) {
+			case previous:
+
+				$('.sample-docs').turn('previous');
+
+			break;
+			case next:
+				
+				$('.sample-docs').turn('next');
+
+			break;
+		}
+
+	});
+//onscreeen arrow go right or left
+	$(document).on('click', '.leftarr', function(e){
+
+		$('.sample-docs').turn('previous');
+
+
+	});
+	$(document).on('click', '.rightarr', function(e){
+
+		$('.sample-docs').turn('next');
+
+
+	});
+//menu move to page by number
+	$(document).on('click', '.btn_go_to_page_id1', function(event) {   
+			flipbook.turn('page', 4);
+	
+	});
+
+	$(document).on('click', '.btn_go_to_page_id2', function(event) {   
+			flipbook.turn('page', 10);
+	
+	});
+	
+	$(document).on('click', '.btn_go_to_page_id3', function(event) {   
+			flipbook.turn('page', 18);
+	
+	});
+	
+	$(document).on('click', '.btn_go_to_page_id4', function(event) {   
+			flipbook.turn('page', 24);
+	
+	});
+
+	$(document).on('click', '.btn_go_to_page_id5', function(event) {   
+			flipbook.turn('page', 30);
+	
+	});
+
+	$(document).on('click', '.btn_go_to_page_id6', function(event) {   
+			flipbook.turn('page', 38);
+	
+	});
+
+	$(document).on('click', '.btn_go_to_page_id7', function(event) {   
+			flipbook.turn('page', 48);
+	
+	});
+
+	$(document).on('click', '.btn_go_to_page_id8', function(event) {   
+			flipbook.turn('page', 52);
+	
+	});
+
+
+
+	// Create the flipbook
+
+	flipbook.turn({
+		elevation: 50,
+		acceleration: false,
+		gradients: true,
+		autoCenter: true,
+		duration: 1000,
+		pages: 60,
+		when: {
+
+		turning: function(e, page, view) {
+			
+			var book = $(this),
+			currentPage = book.turn('page'),
+			pages = book.turn('pages');
+				
+			if (currentPage>3 && currentPage<pages-3) {
+				if (page==1) {
+					book.turn('page', 2).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				} else if (page==pages) {
+					book.turn('page', pages-1).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				}
+			} else if (page>3 && page<pages-3) {
+				if (currentPage==1) {
+					book.turn('page', 2).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				} else if (currentPage==pages) {
+					book.turn('page', pages-1).turn('stop').turn('page', page);
+					e.preventDefault();
+					return;
+				}
+			}
+
+			Hash.go('page/'+page).update();
+
+			if (page==1 || page==pages)
+				$('.sample-docs .tabs').hide();
+			
+
+		},
+
+		turned: function(e, page, view) {
+
+			var book = $(this);
+
+			$('#slider').slider('value', getViewNumber(book, page));
+
+			if (page!=1 && page!=book.turn('pages'))
+				$('.sample-docs .tabs').fadeIn(500);
+			else
+				$('.sample-docs .tabs').hide();
+
+			book.turn('center');
+			updateTabs();
+
+		},
+
+		start: function(e, pageObj) {
+	
+			moveBar(true);
+
+		},
+
+		end: function(e, pageObj) {
+		
+			var book = $(this);
+
+			setTimeout(function() {
+				$('#slider').slider('value', getViewNumber(book));
+			}, 1);
+
+			moveBar(false);
+
+		},
+
+		missing: function (e, pages) {
+
+			for (var i = 0; i < pages.length; i++)
+				addPage(pages[i], $(this));
+
+		}
+	}
+	}). turn('page', 1);
+
+
+	$('#slider').slider('option', 'max', numberOfViews(flipbook));
+
+	flipbook.addClass('animated');
+
+
+	// Show canvas
+
+	$('#canvas').css({visibility: 'visible'});
+}
+
+// Hide canvas
+
+$('#canvas').css({visibility: 'hidden'});
+
+yepnope({
+	test: Modernizr.csstransforms,
+	yep: ['js/turn.min.js', 'css/jquery.ui.css'],
+	nope: ['js/turn.html4.min.js', 'css/jquery.ui.html4.css'],
+	both: ['css/docs.css', 'js/docs.js'],
+	complete: loadApp
+});
+  
+</script>
+
+</body>
+<footer id="fh5co-footer" role="contentinfo">
+	
+	<!-- Messenger Chat Plugin Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Chat Plugin code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "230377050964627");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v13.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>	
+	<div class="container">
+		<div class="row copyright">
+			
+			<h3>SERVICE CLIENT : </h3>
+			<h3><a href="tel:+21694226766"> +216 94 226 766</a>  </h3>
+			<div >
+				<a  href="https://www.facebook.com/haddadconstructionHCM/" >
+					<img alt="" src="pics/fb.png" width="80" height="80" style="margin-top: 40px; margin-bottom: 40px;">
+				 </a>
+				</div>
+			<div class="xx" >
+				<p> &copy; <script>document.write(new Date().getFullYear())</script> <a >Haddad Construction Metallique.</a></p>
+					
+			</div>
+			
+		</div>
+	</div>
+	</div>
+</footer>
+
+</html>
